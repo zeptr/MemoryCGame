@@ -2,6 +2,7 @@ import React from "react";
 import { ImageBackground, SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { useFonts } from 'expo-font';
 import RoundButton from '../components/RoundButton';
+import PlayersModal from "../components/PlayersModal";
 
 
 export default function HomeScreen({navigation}) {
@@ -30,7 +31,7 @@ export default function HomeScreen({navigation}) {
             </View>
 
             <View style={{ flex: 4 }}>
-                
+                <PlayersModal isVisible={true}/>
             </View>
             
         </ImageBackground>

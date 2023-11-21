@@ -34,34 +34,39 @@ export const GameProvider = ({ children }) => {
 
     const flipCard = (flippedCard) => {
         let matchFound = false;
-
-        if (flippedCards.length === 1) {
+        const currentIdentifier = `${flippedCard.rank}_${flippedCard.suit}`;
     
-            if (flippedCard.rank === flippedCards[0].rank && ((flippedCard.suit === "Hearts" && flippedCards[0].rank === "Diamonds") || 
-                (flippedCard.suit === "Diamonds" && flippedCards[0].rank === "Hearts") ||
-                (flippedCard.suit === "Clubs" && flippedCards[0].rank === "Spades") ||
-                (flippedCard.suit === "Spades" && flippedCards[0].rank === "Clubs")) || 
-                (flippedCard.rank === 'Joker' && flippedCards[0].rank === 'Joker')) {
+        if (flippedCards.length === 1) {
+            const previousCard = flippedCards[0];
+            const previousIdentifier = `${previousCard.rank}_${previousCard.suit}`;
+    
+            if (flippedCard.rank === previousCard.rank && ((flippedCard.suit === "Hearts" && previousCard.suit === "Diamonds") || 
+                (flippedCard.suit === "Diamonds" && previousCard.suit === "Hearts") ||
+                (flippedCard.suit === "Clubs" && previousCard.suit === "Spades") ||
+                (flippedCard.suit === "Spades" && previousCard.suit === "Clubs")) || 
+                (flippedCard.rank === 'Joker' && previousCard.rank === 'Joker')) {
+    
                 matchFound = true;
-                setMatchedPairs([...matchedPairs, flippedCards[0], flippedCard]);
+                setMatchedPairs([...matchedPairs, currentIdentifier, previousIdentifier]);
                 setFlippedCards([]);
             }
         }
-
+    
         if (!matchFound) {
             setFlippedCards(flippedCards.length === 1 ? [] : [flippedCard]);
         }
-
+    
         setCards(cards.map(card => {
-            if (card.rank == flippedCard.rank && card.suit == flippedCard.suit) {
-                return { ...card, isFlipped: true };
-            } else if (!matchFound && flippedCards.includes(card)) {
+            const cardIdentifier = `${card.rank}_${card.suit}`;
+            if (cardIdentifier === currentIdentifier) {
+                return { ...card, isFlipped: true, isMatched: matchFound };
+            } else if (!matchFound && flippedCards.length === 1 && cardIdentifier === previousIdentifier) {
                 return { ...card, isFlipped: false };
             }
             return card;
         }));
     };
-
+    
     const resetGame = () => {
         
         setCards([]);

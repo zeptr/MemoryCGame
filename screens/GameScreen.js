@@ -2,7 +2,7 @@ import React from "react";
 import { ImageBackground, SafeAreaView, StyleSheet, View, Text, Image } from "react-native";
 import { useFonts } from 'expo-font';
 import RoundButton from '../components/RoundButton';
-import PlayersModal from "../components/PlayersModal";
+import { GameContext } from "../hook/GameContext";
 
 
 export default function GameScreen({navigation}) {

@@ -18,6 +18,7 @@ export const GameProvider = ({ children }) => {
             ranks.forEach(rank => {
                 deck.push({ suit, rank, isFlipped: false, isMatched: false });
             });
+            deck.push({suit:'Joker', rank: 'Red', isFlipped: false, isMatched: false })
         });
 
         // Fisher-Yates Shuffle Algorithm

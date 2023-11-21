@@ -3,7 +3,7 @@ import { View, Modal, Text, StyleSheet, TouchableOpacity, TextInput, Animated, I
 import { GameContext } from '../hook/GameContext';
 import RoundButton from './RoundButton';
 
-const PlayersModal = ({isVisible, onClose}) => {
+const PlayersModal = ({isVisible, onClose, navigation}) => {
     const [player1Name, setPlayer1Name] = useState('');
     const [player2Name, setPlayer2Name] = useState('');
 
@@ -59,7 +59,7 @@ const PlayersModal = ({isVisible, onClose}) => {
                         />
                     </View>
                 </View>
-                <RoundButton title="LET'S PLAY!" color="#A7DAFF" textColor="#164464"/>
+                <RoundButton title="LET'S PLAY!" color="#A7DAFF" textColor="#164464" onPress={() => navigation.navigate('GameScreen')}/>
             </Animated.View>
         )
     }

@@ -32,8 +32,34 @@ export const GameProvider = ({ children }) => {
         setMatchedPairs([]);
     };
 
-    const flipCard = () => {
-        
+    const flipCard = (flippedCard) => {
+        let matchFound = false;
+
+        if (flippedCards.length === 1) {
+    
+            if (flippedCard.rank === flippedCards[0].rank && ((flippedCard.suit === "Hearts" && flippedCards[0].rank === "Diamonds") || 
+                (flippedCard.suit === "Diamonds" && flippedCards[0].rank === "Hearts") ||
+                (flippedCard.suit === "Clubs" && flippedCards[0].rank === "Spades") ||
+                (flippedCard.suit === "Spades" && flippedCards[0].rank === "Clubs")) || 
+                (flippedCard.rank === 'Joker' && flippedCards[0].rank === 'Joker')) {
+                matchFound = true;
+                setMatchedPairs([...matchedPairs, flippedCards[0], flippedCard]);
+                setFlippedCards([]);
+            }
+        }
+
+        if (!matchFound) {
+            setFlippedCards(flippedCards.length === 1 ? [] : [flippedCard]);
+        }
+
+        setCards(cards.map(card => {
+            if (card.rank == flippedCard.rank && card.suit == flippedCard.suit) {
+                return { ...card, isFlipped: true };
+            } else if (!matchFound && flippedCards.includes(card)) {
+                return { ...card, isFlipped: false };
+            }
+            return card;
+        }));
     };
 
     const resetGame = () => {

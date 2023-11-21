@@ -1,13 +1,13 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const RoundButton = ({ onPress, title, color }) => {
+const RoundButton = ({ onPress, title, color, textColor}) => {
     return (
         <TouchableOpacity 
             style={[styles.button, { backgroundColor: color }]} 
             onPress={onPress}
         >
-            <Text style={styles.buttonText}>{title}</Text>
+            <Text style={[styles.buttonText, { color: textColor}]}>{title}</Text>
         </TouchableOpacity>
     );
 };
@@ -17,13 +17,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
-        borderRadius: 50,
-        width: auto,
-        height: auto,
+        borderRadius: 8,
+        width: 'auto',
+        height: 'auto'
+        
     },
     buttonText: {
-        color: 'white',
         fontSize: 16,
+        fontFamily: 'Poppins-Bold'
     }
 });
 

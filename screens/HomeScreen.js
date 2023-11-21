@@ -1,33 +1,62 @@
 import React from "react";
 import { ImageBackground, SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { useFonts } from 'expo-font';
+import RoundButton from '../components/RoundButton';
+
 
 export default function HomeScreen({navigation}) {
 
+    const [loaded] = useFonts({
+        'Poppins-Bold': require('../assets/PoppinsFont/Poppins-Bold.ttf')
+    });
+
+    if (!loaded) {
+        return null;
+    }
+
     return (
         <ImageBackground style={styles.background} source={require("../assets/Wallpaper.png")}>
-            <SafeAreaView style={{flex:1, justifyContent:'center'}}>
-                <View style= {{flex: 1}}>
+            
+            <View style={styles.topContainer}>
+                <View style={{flex: 1 ,paddingRight: 5, paddingTop: 10}}>
+                    
+                </View>
+                <View style= {{flex: 5, justifyContent: 'center', alignItems: 'center', }}>
                     <Text style={styles.mainText}>Memory</Text>
+                </View>    
+                <View style={{flex: 1 ,paddingRight: 5, paddingTop: 10}}>
+                    <RoundButton title="Exit Game" color='red' textColor='white' alignment='flex-end' />
                 </View>
+            </View>
 
-                <View style= {{flex: 5}}>
-
-                </View>
-            </SafeAreaView>
+            <View style={{ flex: 4 }}>
+                
+            </View>
+            
         </ImageBackground>
+
     )
 }
 
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        alignItems: 'center',
+        //alignItems: 'center',
         flexDirection: 'column',
-        justifyContent: 'center',
+    },
+    topContainer: {
+        flexDirection: 'row',
+        width: '99%', 
     },
     mainText: {
-        fontFamily: "Poppins",
+        fontFamily: "Poppins-Bold",
         fontSize: 32,
-    }
+        color: 'white',
+        alignItems: 'center'
 
-})
+    },
+    buttonContainer: {
+        //flex: 1,
+        alignSelf: 'flex-end'
+    },
+});

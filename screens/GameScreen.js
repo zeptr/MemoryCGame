@@ -4,9 +4,26 @@ import RoundButton from '../components/RoundButton';
 import { GameContext } from "../hook/GameContext";
 import Card from "../components/Card";
 
+    // Get screen width
+    const screenWidth = Dimensions.get('window').width;
+
+    // Define the number of cards per row and the number of rows
+    const cardsPerRow = 18;
+    const numberOfRows = 3;
+
+    // Calculate the width and height of each card
+    // Assuming an aspect ratio for the cards (width:height)
+    const cardAspectRatio = 1 / 1.4; // Change this ratio as per your card design
+    const cardWidth = screenWidth / cardsPerRow;
+    const cardHeight = cardWidth / cardAspectRatio;
+
+    // Calculate the total height required for the game view
+    const calculatedHeight = cardHeight * numberOfRows;
 
 export default function GameScreen({navigation}) {
     const {cards,initializeGame, resetGame, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn} = useContext(GameContext);
+
+    
 
     useEffect(() => {
         initializeGame();
@@ -28,11 +45,11 @@ export default function GameScreen({navigation}) {
                 </View>
             </View>
 
-            <View style={styles.gameView}>
+            <View style={[styles.gameView, { height: calculatedHeight }]}>
                 {cards.map((card, index) => {
                     if (!card.isMatched) {
                         return (
-                            <Card key={index} card={card} />
+                            <Card key={index} card={card} index={index} />
                         );
                     } else{
                         return null; // Don't render matched cards
@@ -41,7 +58,7 @@ export default function GameScreen({navigation}) {
                 })}
             </View>
 
-            <View style={{ flex: 1, flexDirection: 'row'}}>
+            <View style={{ flex: 2, flexDirection: 'row'}}>
                 <View style={styles.playerView}>
                     <View style={{justifyContent: 'center', marginLeft: 5}}>
                         <Image source={require('../assets/Player1.png')} style={{width: 50, height: 70}} />
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     topContainer: {
-        flex: 0.5,
+        flex: 1,
         flexDirection: 'row',
         width: '99%', 
     },
@@ -103,16 +120,16 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     gameView: {
-        flex: 3,
-        flexWrap: 'wrap',
-        flexDirection: 'row',
+        flex: 3, 
         justifyContent: 'center', 
-        alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-        marginVertical: 20,
+        alignItems: 'center', 
+        backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+        marginVertical: 20, 
         marginHorizontal: 15,
         borderRadius: 10,
-        maxWidth: Dimensions.get('window').width
+        maxWidth: Dimensions.get('window').width, 
+        height: calculatedHeight, // Set the calculated height
+        position: 'relative', // Set to 'relative' for absolute positioning of cards
     },
     playerView: {
         flex: 6,

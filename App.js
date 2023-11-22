@@ -15,7 +15,7 @@ export default function App() {
     <GameProvider>
       <StatusBar hidden={true} />
       <NavigationContainer>
-          <Stack.Navigator initialRouteName="WinnerScreen"  screenOptions={{ headerShown: false }}>
+          <Stack.Navigator initialRouteName="Home"  screenOptions={{ headerShown: false }}>
               <Stack.Screen name='Home' component={HomeScreen}/>
               <Stack.Screen name='GameScreen' component={GameScreen}/>
               <Stack.Screen name='WinnerScreen' component={WinnerScreen}/>

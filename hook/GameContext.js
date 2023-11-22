@@ -14,6 +14,7 @@ export const GameProvider = ({ children }) => {
     const [player2Score, setPlayer2Score] = useState(0);
 
     const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
+    const [winner, setWinner] = useState('');
 
     useEffect(() => {
         if (flippedCards.length === 2) {
@@ -36,8 +37,12 @@ export const GameProvider = ({ children }) => {
                 return () => clearTimeout(timeoutId);
             }
 
-            
+            if (matchFound) {
+                checkForGameEnd(); // Call the function after a match is found
+            }
         }
+
+        
     }, [flippedCards, cards]);
 
     const initializeGame = () => {
@@ -61,7 +66,7 @@ export const GameProvider = ({ children }) => {
         }
 
         setCards(deck);
-        setIsGameActive(true);
+        setIsGameActive(false);
         setFlippedCards([]);
         setMatchedPairs([]);
     };
@@ -127,9 +132,26 @@ export const GameProvider = ({ children }) => {
         setPlayer1Score(0);
         setPlayer2Score(0);
     };
-    //console.log(cards);
+
+    const checkForGameEnd = () => {
+        const allMatched = cards.every(card => card.isMatched);
+        if (allMatched) {
+            let winnerName = '';
+            if (player1Score > player2Score) {
+                winnerName = player1Name;
+            } else if (player2Score > player1Score) {
+                winnerName = player2Name;
+            } else {
+                winnerName = 'Draw'; // In case of a tie
+            }
+    
+            setWinner(winnerName);
+            setIsGameActive(false);
+        }
+    };
+
     return (
-        <GameContext.Provider value={{ cards, isGameActive, flippedCards, matchedPairs, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn, setPlayer1Name, setPlayer2Name, setPlayer1Score, setPlayer2Score, initializeGame, flipCard, resetGame }}>
+        <GameContext.Provider value={{ cards, isGameActive, flippedCards, matchedPairs, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn, winner, setPlayer1Name, setPlayer2Name, setPlayer1Score, setPlayer2Score, initializeGame, flipCard, resetGame }}>
             {children}
         </GameContext.Provider>
     );

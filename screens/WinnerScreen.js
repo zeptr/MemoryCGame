@@ -5,8 +5,24 @@ import { GameContext } from "../hook/GameContext";
 
 
 export default function WinnerScreen({navigation}) {
-    const {resetGame, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn} = useContext(GameContext);
+    const {resetGame, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn, winner} = useContext(GameContext);
 
+    let winnerName, winnerScore, runnerUpName, runnerUpScore, isDraw;
+
+    if (winner==player1Name) {
+        winnerName = player1Name;
+        winnerScore = player1Score;
+        runnerUpName = player2Name;
+        runnerUpScore = player2Score;
+    }
+    else if(winner==player2Name){
+        winnerName = player2Name;
+        winnerScore = player2Score;
+        runnerUpName = player1Name;
+        runnerUpScore = player1Score;
+    } else {
+        isDraw = true;
+    }
     return (
         <ImageBackground style={styles.background} source={require("../assets/Wallpaper.png")}>
             
@@ -15,18 +31,20 @@ export default function WinnerScreen({navigation}) {
             </View>
 
             <View style={styles.viewContent}>
-                <Text style={styles.mainText}> Well Done!</Text>
-                <Text style={styles.playerText}>player1Name</Text>
+                <Text style={styles.mainText}>{isDraw ? "It's a Draw!" : "Well Done!"}</Text>
+                <Text style={styles.playerText}>{isDraw ? '' : winnerName}</Text>
                 <Image source={require('../assets/winnerPlayer.png')} style={{width: 180, height: 160}}/>
                 <View style={{flexDirection:'row', marginVertical: 20, height: 80}}>
                     <View style ={{flex:1,justifyContent: 'center', alignItems:'center'}}>
-                        <Image source={require('../assets/trophy.png')} style={{width: 50, height: 60}} />
+                        {/* Conditional rendering based on whether there's a winner or a draw */}
+                        {isDraw ? null : <Image source={require('../assets/winnerPlayer.png')} style={{width: 50, height: 60}}/>}
+                        {/* ... other components for displaying score and player details */}
                     </View>
                     <View style ={{flex:5, flexDirection: 'row', backgroundColor: '#FFD975', alignItems: 'center', justifyContent: 'space-around', borderRadius: 5}}>
                         <Image source={require('../assets/Player1.png')} style={{width: 50, height: 70}} />
                         <Text style={styles.placeText}>1st Place</Text>
-                        <Text style={styles.secondaryText}>player1Name</Text>
-                        <Text style={styles.secondaryText}>{player1Score}</Text>
+                        <Text style={styles.secondaryText}>{winnerName}</Text>
+                        <Text style={styles.secondaryText}>{winnerScore}</Text>
                     </View>
                     <View style ={{flex:1}}>
 
@@ -38,9 +56,9 @@ export default function WinnerScreen({navigation}) {
                     </View>
                     <View style ={{flex:5, flexDirection: 'row', backgroundColor: 'white', alignItems: 'center', justifyContent: 'space-around', borderRadius: 5}}>
                         <Image source={require('../assets/Player2.png')} style={{width: 60, height: 70}} />
-                        <Text style={styles.placeText}>2st Place</Text>
-                        <Text style={styles.secondaryText}>player2Name</Text>
-                        <Text style={styles.secondaryText}>{player2Score}</Text>
+                        <Text style={styles.placeText}>2nd Place</Text>
+                        <Text style={styles.secondaryText}>{runnerUpName}</Text>
+                        <Text style={styles.secondaryText}>{runnerUpScore}</Text>
                     </View>
                     <View style ={{flex:1}}>
 

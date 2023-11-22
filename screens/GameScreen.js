@@ -21,13 +21,17 @@ import Card from "../components/Card";
     const calculatedHeight = cardHeight * numberOfRows;
 
 export default function GameScreen({navigation}) {
-    const {cards,initializeGame, resetGame, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn} = useContext(GameContext);
-
-    
+    const {cards,initializeGame, resetGame, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn, isGameActive, winner} = useContext(GameContext);
 
     useEffect(() => {
         initializeGame();
     }, [])
+
+    useEffect(() => {
+        if (gameOver) {
+            navigation.navigate('WinnerScreen');
+        }
+    }, [gameOver, winner]);
 
     return (
         <ImageBackground style={styles.background} source={require("../assets/Wallpaper.png")}>

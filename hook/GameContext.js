@@ -4,7 +4,7 @@ export const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
     const [cards, setCards] = useState([]); 
-    const [isGameActive, setIsGameActive] = useState(false); 
+    const [isGameActive, setIsGameActive] = useState(true); 
     const [flippedCards, setFlippedCards] = useState([]); 
     const [matchedPairs, setMatchedPairs] = useState([]);
 
@@ -138,7 +138,7 @@ export const GameProvider = ({ children }) => {
     };
 
     const checkForGameEnd = () => {
-        const allMatched = cards.every(card => (card.isMatched == true));
+        const allMatched = cards.every(card => (card.isMatched === true));
         if (allMatched) {
             let winnerName = '';
             if (player1Score > player2Score) {

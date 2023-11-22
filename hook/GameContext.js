@@ -122,11 +122,10 @@ export const GameProvider = ({ children }) => {
     }
     
     const resetGame = () => {
-        
-        setCards([]);
-        setIsGameActive(false);
-        setFlippedCards([]);
-        setMatchedPairs([]);
+        initializeGame();
+        setIsPlayer1Turn(true);
+        setPlayer1Score(0);
+        setPlayer2Score(0);
     };
     //console.log(cards);
     return (

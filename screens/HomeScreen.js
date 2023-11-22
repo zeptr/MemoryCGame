@@ -26,7 +26,7 @@ export default function HomeScreen({navigation}) {
                     <Text style={styles.mainText}>Memory</Text>
                 </View>    
                 <View style={{flex: 1 ,paddingRight: 5, paddingTop: 10}}>
-                    <RoundButton title="Exit Game" color='red' textColor='white' />
+                    <RoundButton title="Exit Game" color='red' textColor='white' onPress={() => navigation.navigate('WinnerScreen')}/>
                 </View>
             </View>
 
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     topContainer: {
         flexDirection: 'row',
         width: '99%', 
+        marginTop: 8
     },
     mainText: {
         fontFamily: "Poppins-Bold",

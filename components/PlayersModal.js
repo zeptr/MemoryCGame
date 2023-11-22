@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { View, Modal, Text, StyleSheet, TouchableOpacity, TextInput, Animated, Image, StatusBar} from 'react-native';
+import { View, Modal, Text, StyleSheet, TextInput, Animated, Image, StatusBar} from 'react-native';
 import { GameContext } from '../hook/GameContext';
 import RoundButton from './RoundButton';
 

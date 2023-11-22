@@ -55,7 +55,7 @@ After launching the game, players take turns flipping cards to find matching pai
 
 ## Improvements
 
-- **Cross-Platform Compatibility:** Future improvements should ensure iOS compatibility, given the current limitations due to software issues.
+- **Cross-Platform Compatibility:** Future improvements should ensure iOS and Web compatibility, given the current limitations due to software issues.
 - **Going Live:** Consider deploying the application for easier access and widespread testing.
 
 ## License

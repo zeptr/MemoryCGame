@@ -1,4 +1,4 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useContext, useState, useEffect} from "react";
 
 export const GameContext = createContext();
 
@@ -12,6 +12,28 @@ export const GameProvider = ({ children }) => {
     const [player2Name, setPlayer2Name] = useState('');
     const [player1Score, setPlayer1Score] = useState(0);
     const [player2Score, setPlayer2Score] = useState(0);
+
+    useEffect(() => {
+        if (flippedCards.length === 2) {
+            const matchFound = checkMatch(flippedCards);
+
+            if (!matchFound) {
+                setFlippingBack(true);
+                const timeoutId = setTimeout(() => {
+                    setCards(cards.map(card => {
+                        if (!card.isMatched) {
+                            return { ...card, isFlipped: false };
+                        }
+                        return card;
+                    }));
+                    setFlippedCards([]);
+                    setFlippingBack(false);
+                }, 1000); // Adjust delay as needed
+
+                return () => clearTimeout(timeoutId);
+            }
+        }
+    }, [flippedCards, cards]);
 
     const initializeGame = () => {
         const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
@@ -39,40 +61,49 @@ export const GameProvider = ({ children }) => {
         setMatchedPairs([]);
     };
 
+    const [flippingBack, setFlippingBack] = useState(false);
+
     const flipCard = (flippedCard) => {
-        let matchFound = false;
+        if (flippedCards.length === 2 || flippingBack) return;
+
         const currentIdentifier = `${flippedCard.rank}_${flippedCard.suit}`;
-    
-        if (flippedCards.length === 1) {
-            const previousCard = flippedCards[0];
-            const previousIdentifier = `${previousCard.rank}_${previousCard.suit}`;
-    
-            if (flippedCard.rank === previousCard.rank && ((flippedCard.suit === "Hearts" && previousCard.suit === "Diamonds") || 
-                (flippedCard.suit === "Diamonds" && previousCard.suit === "Hearts") ||
-                (flippedCard.suit === "Clubs" && previousCard.suit === "Spades") ||
-                (flippedCard.suit === "Spades" && previousCard.suit === "Clubs")) || 
-                (flippedCard.rank === 'Joker' && previousCard.rank === 'Joker')) {
-    
-                matchFound = true;
-                setMatchedPairs([...matchedPairs, currentIdentifier, previousIdentifier]);
-                setFlippedCards([]);
-            }
-        }
-    
-        if (!matchFound) {
-            setFlippedCards(flippedCards.length === 1 ? [] : [flippedCard]);
-        }
-    
+
         setCards(cards.map(card => {
             const cardIdentifier = `${card.rank}_${card.suit}`;
             if (cardIdentifier === currentIdentifier) {
-                return { ...card, isFlipped: true, isMatched: matchFound };
-            } else if (!matchFound && flippedCards.length === 1 && cardIdentifier === previousIdentifier) {
-                return { ...card, isFlipped: false };
+                return { ...card, isFlipped: true };
             }
             return card;
         }));
+
+        const newFlippedCards = [...flippedCards, flippedCard];
+        setFlippedCards(newFlippedCards);
     };
+
+    
+
+    const checkMatch = (flippedCards) => {
+        let matchFound = false;
+        if (flippedCards.length === 2) {
+            if (flippedCards[0].rank === flippedCards[1].rank && ((flippedCards[0].suit === "Hearts" && flippedCards[1].suit === "Diamonds") || 
+                (flippedCards[0].suit === "Diamonds" && flippedCards[1].suit === "Hearts") ||
+                (flippedCards[0].suit === "Clubs" && flippedCards[1].suit === "Spades") ||
+                (flippedCards[0].suit === "Spades" && flippedCards[1].suit === "Clubs")) || 
+                (flippedCards[0].rank === 'Joker' && flippedCards[1].rank === 'Joker')) {
+
+                matchFound = true;
+                setMatchedPairs([...matchedPairs, flippedCards[0], flippedCards[1]]);
+                setFlippedCards([]);
+
+                // Remove the matched cards from the cards array
+                setCards(currentCards => currentCards.filter(card => 
+                    card !== flippedCards[0] && card !== flippedCards[1]
+                ));
+            }
+        }
+        
+        return matchFound;
+    }
     
     const resetGame = () => {
         

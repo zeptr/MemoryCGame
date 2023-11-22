@@ -6,7 +6,7 @@ import Card from "../components/Card";
 
 
 export default function GameScreen({navigation}) {
-    const {cards, isGameActive, flippedCards, matchedPairs, initializeGame, flipCard, resetGame } = useContext(GameContext);
+    const {cards, isGameActive, flippedCards, matchedPairs, initializeGame, flipCard, resetGame, player1Name, player2Name, player1Score, player2Score, setPlayer1Score, setPlayer2Score } = useContext(GameContext);
 
     useEffect(() => {
         initializeGame();
@@ -40,13 +40,13 @@ export default function GameScreen({navigation}) {
                         <Image source={require('../assets/Player1.png')} style={{width: 50, height: 70}} />
                     </View>
                     <View style={styles.scoreView}>
-                        <Text style={styles.scoreText}>Player1</Text>
+                        <Text style={styles.scoreText}>{player1Name}</Text>
                     </View>
                     <View style={styles.scoreView}>
                         <RoundButton title="It's Your Turn" color="white" textColor="#489DDA"/>
                     </View>
                     <View style={styles.scoreView}>
-                    <Text style={styles.scoreText}>0</Text>
+                    <Text style={styles.scoreText}>{player1Score}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -57,13 +57,13 @@ export default function GameScreen({navigation}) {
                         <Image source={require('../assets/Player2.png')} style={{width: 58, height: 70}} />
                     </View>
                     <View style={styles.scoreView}>
-                        <Text style={styles.scoreText}>Player2</Text>
+                        <Text style={styles.scoreText}>{player2Name}</Text>
                     </View>
                     <View style={styles.scoreView}>
                         <RoundButton title="It's Your Turn" color="white" textColor="#489DDA"/>
                     </View>
                     <View style={styles.scoreView}>
-                    <Text style={styles.scoreText}>0</Text>
+                    <Text style={styles.scoreText}>{player2Score}</Text>
                     </View>
                 </View>
             </View>

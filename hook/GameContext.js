@@ -6,7 +6,12 @@ export const GameProvider = ({ children }) => {
     const [cards, setCards] = useState([]); 
     const [isGameActive, setIsGameActive] = useState(false); 
     const [flippedCards, setFlippedCards] = useState([]); 
-    const [matchedPairs, setMatchedPairs] = useState([]); 
+    const [matchedPairs, setMatchedPairs] = useState([]);
+
+    const [player1Name, setPlayer1Name] = useState('');
+    const [player2Name, setPlayer2Name] = useState('');
+    const [player1Score, setPlayer1Score] = useState(0);
+    const [player2Score, setPlayer2Score] = useState(0);
 
     const initializeGame = () => {
         const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
@@ -78,7 +83,7 @@ export const GameProvider = ({ children }) => {
     };
 
     return (
-        <GameContext.Provider value={{ cards, isGameActive, flippedCards, matchedPairs, initializeGame, flipCard, resetGame }}>
+        <GameContext.Provider value={{ cards, isGameActive, flippedCards, matchedPairs, player1Name, player2Name, player1Score, player2Score, setPlayer1Name, setPlayer2Name, setPlayer1Score, setPlayer2Score, initializeGame, flipCard, resetGame }}>
             {children}
         </GameContext.Provider>
     );

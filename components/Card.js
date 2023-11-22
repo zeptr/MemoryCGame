@@ -8,9 +8,7 @@ const Card = ({ rank, suit}) => {
     const flipCard = () => {
         setIsFlipped(!isFlipped);
     };
-    //console.log("1st")
-    //console.log(cardImages['Clubs']['Q']);
-    console.log('Card props:', rank);
+    
     const frontImage = cardImages[rank.suit][rank.rank];
     const backImage = require('../assets/Card_Back.png')
     const imageSource = isFlipped ? frontImage : backImage;

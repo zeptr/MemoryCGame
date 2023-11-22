@@ -4,8 +4,8 @@ import { GameContext } from '../hook/GameContext';
 import RoundButton from './RoundButton';
 
 const PlayersModal = ({isVisible, onClose, navigation}) => {
-    const [player1Name, setPlayer1Name] = useState('');
-    const [player2Name, setPlayer2Name] = useState('');
+    const {player1Name, player2Name, setPlayer1Name, setPlayer2Name} = useContext(GameContext);
+    
 
     const [show, setShow] = useState(isVisible);
     const scaleValue = useRef(new Animated.Value(0)).current;

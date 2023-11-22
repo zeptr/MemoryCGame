@@ -14,7 +14,7 @@ export default function HomeScreen({navigation}) {
     if (!loaded) {
         return null;
     }
-
+    
     return (
         <ImageBackground style={styles.background} source={require("../assets/Wallpaper.png")}>
             

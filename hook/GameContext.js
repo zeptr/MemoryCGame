@@ -66,7 +66,7 @@ export const GameProvider = ({ children }) => {
         }
 
         setCards(deck);
-        setIsGameActive(false);
+        setIsGameActive(true);
         setFlippedCards([]);
         setMatchedPairs([]);
     };
@@ -93,13 +93,17 @@ export const GameProvider = ({ children }) => {
     
 
     const checkMatch = (flippedCards) => {
+        //console.log("Checking match for cards:", flippedCards); // Debugging line
         let matchFound = false;
         if (flippedCards.length === 2) {
-            if (flippedCards[0].rank === flippedCards[1].rank && ((flippedCards[0].suit === "Hearts" && flippedCards[1].suit === "Diamonds") || 
+            if ((flippedCards[0].rank === flippedCards[1].rank && ((flippedCards[0].suit === "Hearts" && flippedCards[1].suit === "Diamonds") || 
                  (flippedCards[0].suit === "Diamonds" && flippedCards[1].suit === "Hearts") ||
                  (flippedCards[0].suit === "Clubs" && flippedCards[1].suit === "Spades") ||
-                 (flippedCards[0].suit === "Spades" && flippedCards[1].suit === "Clubs")) || 
-                 (flippedCards[0].rank === 'Joker' && flippedCards[1].rank === 'Joker')) {
+                 (flippedCards[0].suit === "Spades" && flippedCards[1].suit === "Clubs"))) || 
+                 (flippedCards[0].suit === 'Joker' && flippedCards[1].suit === 'Joker')) {
+
+                // console.log("flip0", flippedCards[0]);
+                // console.log("flip1", flippedCards[1]);
 
                 matchFound = true;
                 setMatchedPairs([...matchedPairs, flippedCards[0], flippedCards[1]]);
@@ -134,7 +138,7 @@ export const GameProvider = ({ children }) => {
     };
 
     const checkForGameEnd = () => {
-        const allMatched = cards.every(card => card.isMatched);
+        const allMatched = cards.every(card => (card.isMatched == true));
         if (allMatched) {
             let winnerName = '';
             if (player1Score > player2Score) {

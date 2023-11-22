@@ -5,7 +5,7 @@ import { GameContext } from "../hook/GameContext";
 
 
 export default function WinnerScreen({navigation}) {
-    const {resetGame, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn, winner} = useContext(GameContext);
+    const {resetGame, player1Name, player2Name, player1Score, player2Score, winner, setIsModalVisible} = useContext(GameContext);
 
     let winnerName, winnerScore, runnerUpName, runnerUpScore, isDraw;
 
@@ -66,7 +66,7 @@ export default function WinnerScreen({navigation}) {
                 </View>
             </View>
             <View style={{flex: 1 ,paddingRight: 5, paddingTop: 10}}>
-                <RoundButton title="Exit Game" color='red' textColor='white' />
+                <RoundButton title="Exit Game" color='red' textColor='white' onPress={() => {navigation.navigate('Home'),  setIsModalVisible(true)} } />
             </View>
         </ImageBackground>
 
@@ -76,7 +76,6 @@ export default function WinnerScreen({navigation}) {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        //alignItems: 'center',
         flexDirection: 'row',
     },
     topContainer: {

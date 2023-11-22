@@ -28,10 +28,10 @@ export default function GameScreen({navigation}) {
     }, [])
 
     useEffect(() => {
-        if (gameOver) {
+        if (!isGameActive) {
             navigation.navigate('WinnerScreen');
         }
-    }, [gameOver, winner]);
+    }, [isGameActive, winner]);
 
     return (
         <ImageBackground style={styles.background} source={require("../assets/Wallpaper.png")}>

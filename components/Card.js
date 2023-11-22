@@ -8,7 +8,7 @@ const Card = ({ card, index }) => {
 
     // Calculate position based on index
     const margin = 5;
-    const cardWidth = (Dimensions.get('window').width / 18) - 13; // adjust number of cards per row
+    const cardWidth = (Dimensions.get('window').width / 23.25); // adjust number of cards per row
     const cardHeight = cardWidth * 1.4; // adjust aspect ratio as needed
     const row = Math.floor(index / 18);
     const column = index % 18;

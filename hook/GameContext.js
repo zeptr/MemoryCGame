@@ -20,7 +20,7 @@ export const GameProvider = ({ children }) => {
             });
         });
         deck.push({suit:'Joker', rank: 'Red', isFlipped: false, isMatched: false });
-        deck.push({suit:'Joker', rank: 'Black', isFlipped: false, isMatched: false })
+        deck.push({suit:'Joker', rank: 'Black', isFlipped: false, isMatched: false });
 
         // Fisher-Yates Shuffle Algorithm
         for (let i = deck.length - 1; i > 0; i--) {

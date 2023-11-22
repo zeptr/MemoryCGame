@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
+import cardImages from '../utils/cardImages';
 
 const Card = ({ rank, suit}) => {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -7,8 +8,10 @@ const Card = ({ rank, suit}) => {
     const flipCard = () => {
         setIsFlipped(!isFlipped);
     };
-
-    const frontImage = cardImages[suit][rank];
+    //console.log("1st")
+    //console.log(cardImages['Clubs']['Q']);
+    console.log('Card props:', rank);
+    //const frontImage = cardImages[rank.suit][rank.rank];
     const backImage = require('../assets/Card_Back.png')
     const imageSource = isFlipped ? frontImage : backImage;
 
@@ -21,8 +24,8 @@ const Card = ({ rank, suit}) => {
 
 const styles = StyleSheet.create({
     card: {
-        width: 33.5,
-        height: 52,
+        width: 45,
+        height: 68.5,
         justifyContent: 'center',
         alignItems: 'center',
         margin: 5,
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     cardImage: {
         width: '100%',
         height: '100%',
-        borderRadius: 10,
+        //borderRadius: 10,
     },
 });
 

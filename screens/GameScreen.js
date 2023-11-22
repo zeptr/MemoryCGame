@@ -1,12 +1,16 @@
-import React from "react";
-import { ImageBackground, SafeAreaView, StyleSheet, View, Text, Image } from "react-native";
-import { useFonts } from 'expo-font';
+import React, { useContext, useEffect} from "react";
+import { ImageBackground, StyleSheet, View, Text, Image, Dimensions } from "react-native";
 import RoundButton from '../components/RoundButton';
 import { GameContext } from "../hook/GameContext";
+import Card from "../components/Card";
 
 
 export default function GameScreen({navigation}) {
+    const {cards, isGameActive, flippedCards, matchedPairs, initializeGame, flipCard, resetGame } = useContext(GameContext);
 
+    useEffect(() => {
+        initializeGame();
+    }, [])
 
     return (
         <ImageBackground style={styles.background} source={require("../assets/Wallpaper.png")}>
@@ -25,7 +29,9 @@ export default function GameScreen({navigation}) {
             </View>
 
             <View style={styles.gameView}>
-                
+                {cards.map((rank, suit) => (
+                    <Card rank={rank} suit={suit} />
+                ))}
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row'}}>
@@ -91,10 +97,15 @@ const styles = StyleSheet.create({
     },
     gameView: {
         flex: 3,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'center', 
+        alignItems: 'center',
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
         marginVertical: 20,
         marginHorizontal: 15,
-        borderRadius: 10
+        borderRadius: 10,
+        maxWidth: Dimensions.get('window').width
     },
     playerView: {
         flex: 6,

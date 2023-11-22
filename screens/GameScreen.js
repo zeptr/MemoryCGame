@@ -24,7 +24,7 @@ export default function GameScreen({navigation}) {
                 </View>    
                 <View style={{flex: 1, flexDirection: 'row' , justifyContent: 'space-between', paddingTop: 15 }}>
                     <RoundButton title="Restart Game" color='#F4A236' textColor='white' />
-                    <RoundButton title="Exit Game" color='red' textColor='white' onPress={() => navigation.navigate('Home')}/>
+                    <RoundButton title="Exit Game" color='red' textColor='white' onPress={() => navigation.goBack()}/>
                 </View>
             </View>
 

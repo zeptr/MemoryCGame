@@ -41,7 +41,7 @@ export const GameProvider = ({ children }) => {
     }, [flippedCards, cards]);
 
     const initializeGame = () => {
-        const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+        const suits = ['Hearts', "Diamonds", "Clubs", "Spades"];
         const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
         let deck = [];
 
@@ -91,10 +91,10 @@ export const GameProvider = ({ children }) => {
         let matchFound = false;
         if (flippedCards.length === 2) {
             if (flippedCards[0].rank === flippedCards[1].rank && ((flippedCards[0].suit === "Hearts" && flippedCards[1].suit === "Diamonds") || 
-                (flippedCards[0].suit === "Diamonds" && flippedCards[1].suit === "Hearts") ||
-                (flippedCards[0].suit === "Clubs" && flippedCards[1].suit === "Spades") ||
-                (flippedCards[0].suit === "Spades" && flippedCards[1].suit === "Clubs")) || 
-                (flippedCards[0].rank === 'Joker' && flippedCards[1].rank === 'Joker')) {
+                 (flippedCards[0].suit === "Diamonds" && flippedCards[1].suit === "Hearts") ||
+                 (flippedCards[0].suit === "Clubs" && flippedCards[1].suit === "Spades") ||
+                 (flippedCards[0].suit === "Spades" && flippedCards[1].suit === "Clubs")) || 
+                 (flippedCards[0].rank === 'Joker' && flippedCards[1].rank === 'Joker')) {
 
                 matchFound = true;
                 setMatchedPairs([...matchedPairs, flippedCards[0], flippedCards[1]]);
@@ -108,9 +108,11 @@ export const GameProvider = ({ children }) => {
 
                 // Update the cards state to mark the matched cards
                 setCards(currentCards => currentCards.map(card => {
-                    if (card === flippedCards[0] || card === flippedCards[1]) {
+                    //console.log(flippedCards[0]);
+                    if ((card.suit === flippedCards[0].suit && card.rank === flippedCards[0].rank) || (card.suit === flippedCards[1].suit && card.rank === flippedCards[1].rank)) {
                         return { ...card, isMatched: true };
                     }
+                    //console.log(card)
                     return card;
                 }));
             }
@@ -126,7 +128,7 @@ export const GameProvider = ({ children }) => {
         setFlippedCards([]);
         setMatchedPairs([]);
     };
-
+    //console.log(cards);
     return (
         <GameContext.Provider value={{ cards, isGameActive, flippedCards, matchedPairs, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn, setPlayer1Name, setPlayer2Name, setPlayer1Score, setPlayer2Score, initializeGame, flipCard, resetGame }}>
             {children}

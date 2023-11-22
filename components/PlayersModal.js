@@ -59,7 +59,9 @@ const PlayersModal = ({isVisible, onClose, navigation}) => {
                         />
                     </View>
                 </View>
-                <RoundButton title="LET'S PLAY!" color="#A7DAFF" textColor="#164464" onPress={() => navigation.navigate('GameScreen')}/>
+                <View style={{justifyContent: 'center', width: 180}}>
+                    <RoundButton title="LET'S PLAY!" color="#A7DAFF" textColor="#164464" onPress={() => navigation.navigate('GameScreen')}/>
+                </View>
             </Animated.View>
         )
     }
@@ -83,7 +85,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '75%',
         height: '80%',
-        backgroundColor: 'rgba(255, 255, 255, 0.5)'
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        alignItems: 'center'
     },
     modalTitle: {
         fontFamily: 'Poppins-Bold',
@@ -94,8 +97,8 @@ const styles = StyleSheet.create({
     },
     input: {
         marginTop: 10,
-        width: 188,
-        height: 36,
+        width: 250,
+        height: 50,
         borderRadius: 10,
         marginBottom: 15,
         paddingHorizontal: 10,

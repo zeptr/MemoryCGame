@@ -13,6 +13,8 @@ export const GameProvider = ({ children }) => {
     const [player1Score, setPlayer1Score] = useState(0);
     const [player2Score, setPlayer2Score] = useState(0);
 
+    const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
+
     useEffect(() => {
         if (flippedCards.length === 2) {
             const matchFound = checkMatch(flippedCards);
@@ -28,10 +30,13 @@ export const GameProvider = ({ children }) => {
                     }));
                     setFlippedCards([]);
                     setFlippingBack(false);
-                }, 1000); // Adjust delay as needed
+                    setIsPlayer1Turn(!isPlayer1Turn); // Toggle turn after both cards have been flipped back
+                }, 500); // Adjust delay as needed
 
                 return () => clearTimeout(timeoutId);
             }
+
+            
         }
     }, [flippedCards, cards]);
 
@@ -94,11 +99,20 @@ export const GameProvider = ({ children }) => {
                 matchFound = true;
                 setMatchedPairs([...matchedPairs, flippedCards[0], flippedCards[1]]);
                 setFlippedCards([]);
+                
+                if (isPlayer1Turn) {
+                    setPlayer1Score(player1Score + 10);
+                } else {
+                    setPlayer2Score(player2Score + 10);
+                }
 
-                // Remove the matched cards from the cards array
-                setCards(currentCards => currentCards.filter(card => 
-                    card !== flippedCards[0] && card !== flippedCards[1]
-                ));
+                // Update the cards state to mark the matched cards
+                setCards(currentCards => currentCards.map(card => {
+                    if (card === flippedCards[0] || card === flippedCards[1]) {
+                        return { ...card, isMatched: true };
+                    }
+                    return card;
+                }));
             }
         }
         
@@ -114,7 +128,7 @@ export const GameProvider = ({ children }) => {
     };
 
     return (
-        <GameContext.Provider value={{ cards, isGameActive, flippedCards, matchedPairs, player1Name, player2Name, player1Score, player2Score, setPlayer1Name, setPlayer2Name, setPlayer1Score, setPlayer2Score, initializeGame, flipCard, resetGame }}>
+        <GameContext.Provider value={{ cards, isGameActive, flippedCards, matchedPairs, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn, setPlayer1Name, setPlayer2Name, setPlayer1Score, setPlayer2Score, initializeGame, flipCard, resetGame }}>
             {children}
         </GameContext.Provider>
     );

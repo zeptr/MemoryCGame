@@ -6,7 +6,7 @@ import Card from "../components/Card";
 
 
 export default function GameScreen({navigation}) {
-    const {cards, isGameActive, flippedCards, matchedPairs, initializeGame, flipCard, resetGame, player1Name, player2Name, player1Score, player2Score, setPlayer1Score, setPlayer2Score } = useContext(GameContext);
+    const {cards,initializeGame, resetGame, player1Name, player2Name, player1Score, player2Score, isPlayer1Turn} = useContext(GameContext);
 
     useEffect(() => {
         initializeGame();
@@ -29,9 +29,16 @@ export default function GameScreen({navigation}) {
             </View>
 
             <View style={styles.gameView}>
-                {cards.map((card, index) => (
-                    <Card key={index} card={card} />
-                ))}
+                {cards.map((card, index) => {
+                    if (!card.isMatched) {
+                        return (
+                            <Card key={index} card={card} />
+                        );
+                    } else{
+                        return null; // Don't render matched cards
+                    }
+                    
+                })}
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row'}}>
@@ -42,11 +49,11 @@ export default function GameScreen({navigation}) {
                     <View style={styles.scoreView}>
                         <Text style={styles.scoreText}>{player1Name}</Text>
                     </View>
-                    <View style={styles.scoreView}>
+                    <View style={[styles.scoreView, {opacity: isPlayer1Turn ? 1 : 0}]}>
                         <RoundButton title="It's Your Turn" color="white" textColor="#489DDA"/>
                     </View>
                     <View style={styles.scoreView}>
-                    <Text style={styles.scoreText}>{player1Score}</Text>
+                        <Text style={styles.scoreText}>{player1Score}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -59,7 +66,7 @@ export default function GameScreen({navigation}) {
                     <View style={styles.scoreView}>
                         <Text style={styles.scoreText}>{player2Name}</Text>
                     </View>
-                    <View style={styles.scoreView}>
+                    <View style={[styles.scoreView, {opacity: isPlayer1Turn ? 0 : 1}]}>
                         <RoundButton title="It's Your Turn" color="white" textColor="#489DDA"/>
                     </View>
                     <View style={styles.scoreView}>
